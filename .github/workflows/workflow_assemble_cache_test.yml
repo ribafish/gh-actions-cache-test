@@ -1,0 +1,32 @@
+name: "Workflow: Master branch"
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  assemble: 
+    name: Assemble
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.1.5
+
+      - name: Setup kill gradle daemon in post run
+        uses: webiny/action-post-run@2.0.1
+        id: post-run-command
+        with:
+          run: ./gradlew --stop
+
+      - name: Run Gradle task
+        run: >-
+          ./gradlew assemble
+          --daemon
+          -Dorg.gradle.parallel=true
+          -Dorg.gradle.caching=true
+          -Dorg.gradle.jvmargs="-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8 -Dkotlin.daemon.jvm.options=-Xmx1g"
