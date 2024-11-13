@@ -22,3 +22,4 @@ jobs:
           ./gradlew :app:assembleDebug
           --daemon
           -Dorg.gradle.jvmargs="-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8 -Dkotlin.daemon.jvm.options=-Xmx1g"
+          -Ddevelocity.deprecation.captureOrigin=true
