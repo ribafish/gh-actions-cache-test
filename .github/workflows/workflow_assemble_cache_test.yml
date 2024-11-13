@@ -12,16 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.1.5
-
-      - name: Setup kill gradle daemon in post run
-        uses: webiny/action-post-run@2.0.1
-        id: post-run-command
-        with:
-          run: ./gradlew --stop
+        uses: gradle/gradle-build-action@v3
 
       - name: Run Gradle task
         run: >-
